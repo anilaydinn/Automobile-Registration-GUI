@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
@@ -53,6 +55,11 @@ public class MainPage extends JFrame {
 		JButton btnAddCar = new JButton("Add Car");
 		btnAddCar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				if(updatePanel.isVisible()) {
+					updatePanel.setVisible(false);
+					addPanel.setVisible(true);
+				}
 				addPanel.setVisible(true);
 			}
 		});
@@ -62,17 +69,42 @@ public class MainPage extends JFrame {
 		JButton btnUpdateCar = new JButton("Update Car");
 		btnUpdateCar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				updatePanel.setVisible(true);
+				
+				String plate;
+				
+				if(addPanel.isVisible() && updatePanel.isVisible() == false) {
+					addPanel.setVisible(false);
+					updatePanel.setVisible(true);
+					plate = JOptionPane.showInputDialog("Which car do you want to update ? (Please enter car plate!)");
+				}
+				else if(addPanel.isVisible() == false && updatePanel.isVisible() == false) {
+					updatePanel.setVisible(true);
+					plate = JOptionPane.showInputDialog("Which car do you want to update ? (Please enter car plate!)");
+				}
 			}
 		});
 		btnUpdateCar.setBounds(54, 126, 117, 25);
 		contentPane.add(btnUpdateCar);
 		
 		JButton btnDeleteCar = new JButton("Delete Car");
+		btnDeleteCar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DeletePage deletePage = new DeletePage();
+				setVisible(false);
+				deletePage.setVisible(true);
+			}
+		});
 		btnDeleteCar.setBounds(54, 202, 117, 25);
 		contentPane.add(btnDeleteCar);
 		
 		JButton btnListCar = new JButton("List Car");
+		btnListCar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ListCarPage listCarPage = new ListCarPage();
+				setVisible(false);
+				listCarPage.setVisible(true);
+			}
+		});
 		btnListCar.setBounds(54, 284, 117, 25);
 		contentPane.add(btnListCar);
 		

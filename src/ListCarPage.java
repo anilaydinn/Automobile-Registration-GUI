@@ -4,40 +4,32 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class DeletePage extends JFrame {
+public class ListCarPage extends JFrame {
 
 	private JPanel contentPane;
-	
+
 	/**
 	 * Create the frame.
 	 */
-	public DeletePage() {
+	public ListCarPage() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 375, 166);
+		setBounds(100, 100, 677, 496);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		setLocationRelativeTo(null);
 		contentPane.setLayout(null);
 		
-		JButton btnDeleteAll = new JButton("Delete All");
-		btnDeleteAll.setBounds(12, 49, 166, 25);
-		contentPane.add(btnDeleteAll);
-		
-		JButton btnDeleteByPlate = new JButton("Delete by Plate");
-		btnDeleteByPlate.setBounds(186, 49, 166, 25);
-		contentPane.add(btnDeleteByPlate);
-		
-		JLabel lblDeletePage = new JLabel("Delete Page");
-		lblDeletePage.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblDeletePage.setBounds(119, 12, 132, 25);
-		contentPane.add(lblDeletePage);
+		JList carJlist = new JList();
+		carJlist.setBounds(12, 53, 643, 362);
+		contentPane.add(carJlist);
 		
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
@@ -47,7 +39,16 @@ public class DeletePage extends JFrame {
 				mainPage.setVisible(true);
 			}
 		});
-		btnBack.setBounds(12, 99, 87, 25);
+		btnBack.setBounds(12, 427, 117, 25);
 		contentPane.add(btnBack);
+		
+		JButton btnList = new JButton("List");
+		btnList.setBounds(538, 427, 117, 25);
+		contentPane.add(btnList);
+		
+		JLabel lblListCar = new JLabel("List Car");
+		lblListCar.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblListCar.setBounds(293, 26, 88, 15);
+		contentPane.add(lblListCar);
 	}
 }
