@@ -168,6 +168,70 @@ public class MainPage extends JFrame {
 		addPanel.add(tfPlate);
 		
 		JButton btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				FileManager fileManager = new FileManager();
+				String brand = tfBrand.getText();
+				String model = tfModel.getText();
+				String color = tfColor.getText();
+				String fuelType = tfFuelType.getText();
+				int doors;
+				try {
+					doors = Integer.parseInt(tfDoors.getText());
+				}
+				catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "You should write number of doors !");
+					doors = 0;
+				}
+				
+				
+				
+				String plate = tfPlate.getText();
+				Car car = new Car(brand, model, color, fuelType, doors, plate);
+				
+				if(car.getBrand().equals("")) {
+					JOptionPane.showMessageDialog(null, "You should write brand !");
+					return;
+				}
+				else if(car.getModel().equals("")) {
+					JOptionPane.showMessageDialog(null, "You should write model !");
+					return;
+				}
+				else if(car.getColor().equals("")) {
+					JOptionPane.showMessageDialog(null, "You should write color !");
+					return;
+				}
+				else if(car.getFuelType().equals("")) {
+					JOptionPane.showMessageDialog(null, "You should write fuel type !");
+					return;
+				}
+				else if(car.getDoors() == 0) {
+					JOptionPane.showMessageDialog(null, "You should write number of doors !");
+					return;
+				}
+				else if(car.getDoors() > 4) {
+					JOptionPane.showMessageDialog(null, "Impossible ! Doors bigger than 4 !");
+					return;
+				}
+				else if(tfDoors.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "You should write number of doors !");
+					return;
+				}
+				else if(car.getPlate().equals("")) {
+					JOptionPane.showMessageDialog(null, "You should write plate !");
+					return;
+				}
+				
+				fileManager.addCarToFile(car);
+				tfBrand.setText("");
+				tfModel.setText("");
+				tfColor.setText("");
+				tfFuelType.setText("");
+				tfDoors.setText("");
+				tfPlate.setText("");
+			}
+		});
 		btnAdd.setBounds(115, 231, 139, 25);
 		addPanel.add(btnAdd);
 		
