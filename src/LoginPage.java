@@ -5,18 +5,21 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JPasswordField;
 
 public class LoginPage extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField tfUsername;
-	private JTextField tfPassword;
+	private JPasswordField pfPasswordField;
 
 	/**
 	 * Launch the application.
@@ -56,11 +59,6 @@ public class LoginPage extends JFrame {
 		contentPane.add(tfUsername);
 		tfUsername.setColumns(10);
 		
-		tfPassword = new JTextField();
-		tfPassword.setColumns(10);
-		tfPassword.setBounds(134, 102, 205, 19);
-		contentPane.add(tfPassword);
-		
 		JLabel lblUsername = new JLabel("Username:");
 		lblUsername.setBounds(22, 73, 94, 15);
 		contentPane.add(lblUsername);
@@ -69,14 +67,28 @@ public class LoginPage extends JFrame {
 		lblPassword.setBounds(22, 104, 94, 15);
 		contentPane.add(lblPassword);
 		
+		pfPasswordField = new JPasswordField();
+		pfPasswordField.setBounds(134, 102, 205, 19);
+		contentPane.add(pfPasswordField);
+		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setBounds(134, 133, 99, 25);
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				MainPage mainPage = new MainPage();
-				setVisible(false);
-				mainPage.setVisible(true);
+				FileManager fileManager = new FileManager("users.txt");
+				String username = tfUsername.getText();
+				String password = new String(pfPasswordField.getPassword());
+				
+				if(fileManager.readUserFile(username, password)) {
+					MainPage mainPage = new MainPage();
+					setVisible(false);
+					mainPage.setVisible(true);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Username or password incorrect !");
+				}
+				
 			}
 		});
 		contentPane.add(btnLogin);
@@ -92,5 +104,6 @@ public class LoginPage extends JFrame {
 			}
 		});
 		contentPane.add(btnRegister);
+		
 	}
 }

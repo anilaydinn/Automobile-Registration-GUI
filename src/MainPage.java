@@ -4,6 +4,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -11,6 +15,9 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 public class MainPage extends JFrame {
@@ -22,12 +29,7 @@ public class MainPage extends JFrame {
 	private JTextField tfFuelType;
 	private JTextField tfDoors;
 	private JTextField tfPlate;
-	private JTextField tfUpdateBrand;
-	private JTextField tfUpdateModel;
-	private JTextField tfUpdateColor;
-	private JTextField tfUpdateFuelType;
-	private JTextField tfUpdateDoors;
-	private JTextField tfUpdatePlate;
+	private String updatePlate;
 
 	/**
 	 * Create the frame.
@@ -46,20 +48,9 @@ public class MainPage extends JFrame {
 		contentPane.add(addPanel);
 		addPanel.setLayout(null);
 		
-		JPanel updatePanel = new JPanel();
-		updatePanel.setVisible(false);
-		updatePanel.setLayout(null);
-		updatePanel.setBounds(270, 41, 479, 268);
-		contentPane.add(updatePanel);
-		
 		JButton btnAddCar = new JButton("Add Car");
 		btnAddCar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				if(updatePanel.isVisible()) {
-					updatePanel.setVisible(false);
-					addPanel.setVisible(true);
-				}
 				addPanel.setVisible(true);
 			}
 		});
@@ -69,18 +60,9 @@ public class MainPage extends JFrame {
 		JButton btnUpdateCar = new JButton("Update Car");
 		btnUpdateCar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				String plate;
-				
-				if(addPanel.isVisible() && updatePanel.isVisible() == false) {
-					addPanel.setVisible(false);
-					updatePanel.setVisible(true);
-					plate = JOptionPane.showInputDialog("Which car do you want to update ? (Please enter car plate!)");
-				}
-				else if(addPanel.isVisible() == false && updatePanel.isVisible() == false) {
-					updatePanel.setVisible(true);
-					plate = JOptionPane.showInputDialog("Which car do you want to update ? (Please enter car plate!)");
-				}
+				UpdatePage updatePage = new UpdatePage();
+				setVisible(false);
+				updatePage.setVisible(true);
 			}
 		});
 		btnUpdateCar.setBounds(54, 126, 117, 25);
@@ -171,7 +153,7 @@ public class MainPage extends JFrame {
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				FileManager fileManager = new FileManager();
+				FileManager fileManager = new FileManager("automobiles.txt");
 				String brand = tfBrand.getText();
 				String model = tfModel.getText();
 				String color = tfColor.getText();
@@ -184,7 +166,6 @@ public class MainPage extends JFrame {
 					JOptionPane.showMessageDialog(null, "You should write number of doors !");
 					doors = 0;
 				}
-				
 				
 				
 				String plate = tfPlate.getText();
@@ -248,80 +229,16 @@ public class MainPage extends JFrame {
 		lblAddCar.setBounds(207, 12, 70, 15);
 		addPanel.add(lblAddCar);
 		
-		JLabel lblUpdateCar = new JLabel("Update Car");
-		lblUpdateCar.setBounds(207,12,90,15);
-		updatePanel.add(lblUpdateCar);
-		
-		
-		
-		tfUpdateBrand = new JTextField();
-		tfUpdateBrand.setColumns(10);
-		tfUpdateBrand.setBounds(116, 49, 289, 19);
-		updatePanel.add(tfUpdateBrand);
-		
-		JLabel lblUpdateBrand = new JLabel("Brand:");
-		lblUpdateBrand.setBounds(12, 51, 86, 15);
-		updatePanel.add(lblUpdateBrand);
-		
-		JLabel lblUpdateModel = new JLabel("Model:");
-		lblUpdateModel.setBounds(12, 80, 86, 15);
-		updatePanel.add(lblUpdateModel);
-		
-		tfUpdateModel = new JTextField();
-		tfUpdateModel.setColumns(10);
-		tfUpdateModel.setBounds(116, 78, 289, 19);
-		updatePanel.add(tfUpdateModel);
-		
-		tfUpdateColor = new JTextField();
-		tfUpdateColor.setColumns(10);
-		tfUpdateColor.setBounds(116, 107, 289, 19);
-		updatePanel.add(tfUpdateColor);
-		
-		JLabel lblUpdateColor = new JLabel("Color:");
-		lblUpdateColor.setBounds(12, 109, 86, 15);
-		updatePanel.add(lblUpdateColor);
-		
-		tfUpdateFuelType = new JTextField();
-		tfUpdateFuelType.setColumns(10);
-		tfUpdateFuelType.setBounds(116, 138, 289, 19);
-		updatePanel.add(tfUpdateFuelType);
-		
-		JLabel lblUpdateFuelType = new JLabel("Fuel Type:");
-		lblUpdateFuelType.setBounds(12, 140, 86, 15);
-		updatePanel.add(lblUpdateFuelType);
-		
-		JLabel lblUpdateDoors = new JLabel("Doors:");
-		lblUpdateDoors.setBounds(12, 171, 86, 15);
-		updatePanel.add(lblUpdateDoors);
-		
-		tfUpdateDoors = new JTextField();
-		tfUpdateDoors.setColumns(10);
-		tfUpdateDoors.setBounds(116, 169, 289, 19);
-		updatePanel.add(tfUpdateDoors);
-		
-		JLabel lblUpdatePlate = new JLabel("Plate:");
-		lblUpdatePlate.setBounds(12, 200, 86, 15);
-		updatePanel.add(lblUpdatePlate);
-		
-		tfUpdatePlate = new JTextField();
-		tfUpdatePlate.setColumns(10);
-		tfUpdatePlate.setBounds(116, 198, 289, 19);
-		updatePanel.add(tfUpdatePlate);
-		
-		JButton btnUpdate = new JButton("Update");
-		btnUpdate.setBounds(115, 231, 139, 25);
-		updatePanel.add(btnUpdate);
-		
-		JButton btnCloseUpdate = new JButton("Close");
-		btnCloseUpdate.setBounds(266, 231, 139, 25);
-		btnCloseUpdate.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				updatePanel.setVisible(false);
-			}
-		});
-		updatePanel.add(btnCloseUpdate);
-		
 		setLocationRelativeTo(null);
+	}
+	
+	public void setUpdatePlate(String updatePlate) {
+		
+		this.updatePlate = updatePlate;
+	}
+	
+	public String getUpdatePlate() {
+		
+		return this.updatePlate;
 	}
 }

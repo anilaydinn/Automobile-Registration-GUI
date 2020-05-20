@@ -1,40 +1,72 @@
-import java.io.BufferedWriter;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class FileManager {
 
-	private FileWriter writer;
-	private File file;
+	private FileWriter automobilesFileWriter;
+	private FileWriter userFileWriter;
+	private BufferedReader userFileBufferedReader;
+	private FileReader userFileFileReader;
+	private Scanner userFileScanner;
+	private File automobilesFile;
+	private File usersFile;
 	private ArrayList<Car> cars;
 	
-	public FileManager() {
+	public FileManager(String filename) {
 		
-		this.file = new File("automobiles.txt");
-		
-		try {
-			this.writer = new FileWriter(this.file, true);
-		} catch (IOException e) {
+		if(filename.equals("automobiles.txt")) {
 			
-			e.printStackTrace();
+			this.automobilesFile = new File(filename);
+		}
+		else if(filename.equals("users.txt")) {
+			
+			this.usersFile = new File(filename);
 		}
 	}
 	
-	public void setWriter(FileWriter writer) {
+	public void setAutomobilesFileWriter(FileWriter automobilesFileWriter) {
 		
-		this.writer = writer;
+		this.automobilesFileWriter = automobilesFileWriter;
 	}
 	
-	public FileWriter getWriter() {
+	public FileWriter getAutomobilesFileWriter() {
 		
-		return this.writer;
+		return this.automobilesFileWriter;
 	}
 	
-	public void addCarstoArrayList(Car car) {
+	public void setUserFileWriter(FileWriter userFileWriter) {
 		
-		this.cars.add(car);
+		this.userFileWriter = userFileWriter;
+	}
+	
+	public FileWriter getUserFileWriter() {
+		
+		return this.userFileWriter;
+	}
+	
+	public void setUsersFile(File usersFile) {
+		
+		this.usersFile = usersFile;
+	}
+	
+	public File getUsersFile() {
+		
+		return this.usersFile;
+	}
+	
+	public void setAutomobilesFile(File automobilesFile) {
+		
+		this.automobilesFile = automobilesFile;
+	}
+	
+	public File getAutomobilesFile() {
+		
+		return this.automobilesFile;
 	}
 	
 	public void setCars(ArrayList<Car> cars) {
@@ -47,23 +79,64 @@ public class FileManager {
 		return this.cars;
 	}
 	
-	public void setFile(File file) {
-		
-		this.file = file;
-	}
-	
-	public File getFile() {
-		
-		return this.file;
-	}
-	
 	public void addCarToFile(Car car) {
 		
 		try {
-			this.writer.write(car.toString() + "\n");
-			this.writer.close();
-		} catch (IOException e) {
+			
+			this.automobilesFileWriter = new FileWriter(automobilesFile,true);
+			this.automobilesFileWriter.write(car.toString() + "\n");
+			this.automobilesFileWriter.close();
+		}
+		catch(IOException e) {
+			
 			e.printStackTrace();
+		}
+	}
+	
+	public void addUserToFile(User user) {
+		
+		try {
+			
+			this.userFileWriter = new FileWriter(usersFile,true);
+			this.userFileWriter.write(user.toString() + "\n");
+			this.userFileWriter.close();
+		}
+		catch(IOException e){
+			
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean readUserFile(String username, String password) {
+		
+		boolean isLogin = false;
+		
+		try {
+			
+			this.userFileFileReader = new FileReader(usersFile);
+			this.userFileBufferedReader = new BufferedReader(this.userFileFileReader);
+			this.userFileScanner = new Scanner(this.userFileBufferedReader);
+			
+			while(userFileScanner.hasNextLine()) {
+				
+				String user_info = userFileScanner.nextLine();
+				
+				if(user_info.equals(username + " " + password)) {
+					
+					isLogin = true;
+					break;
+				}
+				else {
+					
+					isLogin = false;
+				}
+			}
+			return isLogin;
+		}
+		catch(IOException e) {
+			
+			e.printStackTrace();
+			return false;
 		}
 	}
 }

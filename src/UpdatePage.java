@@ -1,0 +1,164 @@
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.awt.event.ActionEvent;
+
+public class UpdatePage extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField tfBrand;
+	private JTextField tfModel;
+	private JLabel lblModel;
+	private JTextField tfColor;
+	private JLabel lblBrand_2;
+	private JTextField tfFuelType;
+	private JLabel lblFuelType;
+	private JTextField tfDoors;
+	private JLabel lblDoors;
+	private JLabel lblPlate;
+	private JTextField tfPlate;
+	/**
+	 * Create the frame.
+	 */
+	public UpdatePage() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 281, 322);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
+		
+		String plate = JOptionPane.showInputDialog("Please enter plate for update.");
+		
+		JLabel lblUpdate = new JLabel("Update Automobile");
+		lblUpdate.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblUpdate.setBounds(52, 12, 202, 27);
+		contentPane.add(lblUpdate);
+		
+		tfBrand = new JTextField();
+		tfBrand.setBounds(119, 51, 135, 19);
+		contentPane.add(tfBrand);
+		tfBrand.setColumns(10);
+		
+		JLabel lblBrand = new JLabel("Brand:");
+		lblBrand.setBounds(31, 53, 70, 15);
+		contentPane.add(lblBrand);
+		
+		tfModel = new JTextField();
+		tfModel.setColumns(10);
+		tfModel.setBounds(119, 82, 135, 19);
+		contentPane.add(tfModel);
+		
+		lblModel = new JLabel("Model:");
+		lblModel.setBounds(31, 84, 70, 15);
+		contentPane.add(lblModel);
+		
+		tfColor = new JTextField();
+		tfColor.setColumns(10);
+		tfColor.setBounds(119, 113, 135, 19);
+		contentPane.add(tfColor);
+		
+		lblBrand_2 = new JLabel("Color:");
+		lblBrand_2.setBounds(31, 115, 70, 15);
+		contentPane.add(lblBrand_2);
+		
+		tfFuelType = new JTextField();
+		tfFuelType.setColumns(10);
+		tfFuelType.setBounds(119, 144, 135, 19);
+		contentPane.add(tfFuelType);
+		
+		lblFuelType = new JLabel("Fuel Type");
+		lblFuelType.setBounds(31, 146, 70, 15);
+		contentPane.add(lblFuelType);
+		
+		tfDoors = new JTextField();
+		tfDoors.setColumns(10);
+		tfDoors.setBounds(119, 175, 135, 19);
+		contentPane.add(tfDoors);
+		
+		lblDoors = new JLabel("Doors:");
+		lblDoors.setBounds(31, 177, 70, 15);
+		contentPane.add(lblDoors);
+		
+		lblPlate = new JLabel("Plate:");
+		lblPlate.setBounds(31, 208, 70, 15);
+		contentPane.add(lblPlate);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MainPage mainPage = new MainPage();
+				setVisible(false);
+				mainPage.setVisible(true);
+			}
+		});
+		
+		tfPlate = new JTextField();
+		tfPlate.setColumns(10);
+		tfPlate.setBounds(119, 206, 135, 19);
+		contentPane.add(tfPlate);
+		btnBack.setBounds(31, 248, 86, 25);
+		contentPane.add(btnBack);
+		
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				ArrayList<String> automobilesList = new ArrayList<String>();
+				Car car;
+				
+				try(Scanner scanner = new Scanner(new BufferedReader(new FileReader("automobiles.txt")))){
+					
+					while(scanner.hasNextLine()) {
+						
+						String automobiles_info = scanner.nextLine();
+						
+						if(automobiles_info.contains(plate)) {
+							continue;
+						}
+						
+						automobilesList.add(automobiles_info);
+					}
+					scanner.close();	
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				try {
+					File tempFile = new File("temp.txt");
+					FileWriter tempFileWriter = new FileWriter(tempFile);
+					
+					for(String automobileLine : automobilesList) {
+						
+						tempFileWriter.write(automobileLine);
+					}
+					tempFileWriter.close();
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		btnUpdate.setBounds(168, 248, 86, 25);
+		contentPane.add(btnUpdate);
+	}
+}
