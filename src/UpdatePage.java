@@ -123,7 +123,15 @@ public class UpdatePage extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				ArrayList<String> automobilesList = new ArrayList<String>();
-				Car car;
+				
+				String updatedBrand = tfBrand.getText();
+				String updateModel = tfModel.getText();
+				String updateColor = tfColor.getText();
+				String updateFuelType = tfFuelType.getText();
+				int updateDoors = Integer.parseInt(tfDoors.getText());
+				String  updatePlate = tfPlate.getText();
+				
+				Car car = new Car(updatedBrand, updateModel, updateColor, updateFuelType, updateDoors, updatePlate);
 				
 				try(Scanner scanner = new Scanner(new BufferedReader(new FileReader("automobiles.txt")))){
 					
@@ -137,25 +145,30 @@ public class UpdatePage extends JFrame {
 						
 						automobilesList.add(automobiles_info);
 					}
-					scanner.close();	
+					scanner.close();
+					
+					try {
+						File tempFile = new File("temp.txt");
+						FileWriter tempFileWriter = new FileWriter(tempFile);
+						
+						for(String automobile : automobilesList) {
+							
+							tempFileWriter.write(automobile + "\n");
+						}
+						tempFileWriter.write(car.toString() + "\n");
+						tempFileWriter.close();
+					}
+					catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+		
 				}
 				catch (IOException e) {
 					e.printStackTrace();
 				}
 				
-				try {
-					File tempFile = new File("temp.txt");
-					FileWriter tempFileWriter = new FileWriter(tempFile);
-					
-					for(String automobileLine : automobilesList) {
-						
-						tempFileWriter.write(automobileLine);
-					}
-					tempFileWriter.close();
-				}
-				catch (IOException e) {
-					e.printStackTrace();
-				}
+				
 			}
 		});
 		btnUpdate.setBounds(168, 248, 86, 25);

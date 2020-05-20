@@ -16,7 +16,9 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 
@@ -29,7 +31,6 @@ public class MainPage extends JFrame {
 	private JTextField tfFuelType;
 	private JTextField tfDoors;
 	private JTextField tfPlate;
-	private String updatePlate;
 
 	/**
 	 * Create the frame.
@@ -82,9 +83,9 @@ public class MainPage extends JFrame {
 		JButton btnListCar = new JButton("List Car");
 		btnListCar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ListCarPage listCarPage = new ListCarPage();
+				ShowPage showPage = new ShowPage();
 				setVisible(false);
-				listCarPage.setVisible(true);
+				showPage.setVisible(true);
 			}
 		});
 		btnListCar.setBounds(54, 284, 117, 25);
@@ -210,7 +211,7 @@ public class MainPage extends JFrame {
 				tfColor.setText("");
 				tfFuelType.setText("");
 				tfDoors.setText("");
-				tfPlate.setText("");
+				tfPlate.setText("");	
 			}
 		});
 		btnAdd.setBounds(115, 231, 139, 25);
@@ -231,14 +232,5 @@ public class MainPage extends JFrame {
 		
 		setLocationRelativeTo(null);
 	}
-	
-	public void setUpdatePlate(String updatePlate) {
-		
-		this.updatePlate = updatePlate;
-	}
-	
-	public String getUpdatePlate() {
-		
-		return this.updatePlate;
-	}
+
 }
