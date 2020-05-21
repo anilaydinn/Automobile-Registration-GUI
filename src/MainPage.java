@@ -49,40 +49,6 @@ public class MainPage extends JFrame {
 		contentPane.add(addPanel);
 		addPanel.setLayout(null);
 		
-		/*
-		try {
-			File automobilesFile = new File("automobiles.txt");
-			Scanner automobileScanner = new Scanner(new BufferedReader(new FileReader(automobilesFile)));
-			String automobile_line;
-			ArrayList<String> automobiles = new ArrayList<String>();
-			
-			while(automobileScanner.hasNextLine()) {
-				
-				automobile_line = automobileScanner.nextLine();
-				automobiles.add(automobile_line);
-			}
-			automobileScanner.close();
-			
-			try {
-				File tempFile = new File("temp.txt");
-				FileWriter tempFileWriter = new FileWriter(tempFile);
-				
-				for(String automobile : automobiles) {
-					
-					tempFileWriter.write(automobile + "\n");
-				}
-				tempFileWriter.close();
-			}
-			catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-		*/
-		
 		JButton btnAddCar = new JButton("Add Car");
 		btnAddCar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

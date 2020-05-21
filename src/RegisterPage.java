@@ -77,7 +77,9 @@ public class RegisterPage extends JFrame {
 		btnRegister = new JButton("Register");
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				FileManager fileManager = new FileManager("users.txt");
+				
 				String username = tfUsername.getText();
 				String password = new String(pfPasswordField.getPassword());
 				String confirmPassword = new String(pfConfirmPasswordField.getPassword());
@@ -96,7 +98,7 @@ public class RegisterPage extends JFrame {
 				}
 				else if(!username.equals("") && (password.equals("") || confirmPassword.equals(""))) {
 					
-					JOptionPane.showMessageDialog(null, "You shoul fill all pasword fields !");
+					JOptionPane.showMessageDialog(null, "You should fill all pasword fields !");
 				}
 			}
 		});
