@@ -49,6 +49,7 @@ public class MainPage extends JFrame {
 		contentPane.add(addPanel);
 		addPanel.setLayout(null);
 		
+		/*
 		try {
 			File automobilesFile = new File("automobiles.txt");
 			Scanner automobileScanner = new Scanner(new BufferedReader(new FileReader(automobilesFile)));
@@ -80,6 +81,7 @@ public class MainPage extends JFrame {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+		*/
 		
 		JButton btnAddCar = new JButton("Add Car");
 		btnAddCar.addActionListener(new ActionListener() {
@@ -244,6 +246,35 @@ public class MainPage extends JFrame {
 				tfFuelType.setText("");
 				tfDoors.setText("");
 				tfPlate.setText("");
+				
+				try {
+					File automobilesFile = new File("automobiles.txt");
+					Scanner automobilesScanner = new Scanner(new BufferedReader(new FileReader(automobilesFile)));
+					ArrayList<String> automobileLines = new ArrayList<String>();
+					
+					while(automobilesScanner.hasNextLine()) {
+						
+						automobileLines.add(automobilesScanner.nextLine());
+					}
+					automobilesScanner.close();
+					
+					try {
+						File tempFile = new File("temp.txt");
+						FileWriter tempFileWriter = new FileWriter(tempFile);
+						
+						for(String automobile : automobileLines) {
+							
+							tempFileWriter.write(automobile + "\n");
+						}
+						tempFileWriter.close();
+					}
+					catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		btnAdd.setBounds(115, 231, 139, 25);
