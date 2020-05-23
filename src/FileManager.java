@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 public class FileManager {
 
 	private FileWriter automobilesFileWriter;
@@ -135,7 +137,7 @@ public class FileManager {
 		}
 		catch(IOException e) {
 			
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Users file is empty! User not found!");
 			return false;
 		}
 	}

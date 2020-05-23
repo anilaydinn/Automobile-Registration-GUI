@@ -129,6 +129,15 @@ public class UpdatePage extends JFrame {
 				String updateColor = tfColor.getText();
 				String updateFuelType = tfFuelType.getText();
 				int updateDoors = Integer.parseInt(tfDoors.getText());
+				
+				try {
+					updateDoors = Integer.parseInt(tfDoors.getText());
+				}
+				catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "You should write number of doors !");
+					updateDoors = 0;
+				}
+				
 				String  updatePlate = tfPlate.getText();
 				
 				Car car = new Car(updatedBrand, updateModel, updateColor, updateFuelType, updateDoors, updatePlate);
@@ -161,14 +170,10 @@ public class UpdatePage extends JFrame {
 					catch (IOException e) {
 						e.printStackTrace();
 					}
-					
-		
 				}
 				catch (IOException e) {
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "First, you should add car !");
 				}
-				
-				
 			}
 		});
 		btnUpdate.setBounds(168, 248, 86, 25);

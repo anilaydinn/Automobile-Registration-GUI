@@ -12,6 +12,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class DeletePage extends JFrame {
 					tempFileWriter.close();
 				}
 				catch (IOException e) {
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "First, you should add car !");
 				}
 			}
 		});
@@ -58,7 +59,7 @@ public class DeletePage extends JFrame {
 				
 				String plate = JOptionPane.showInputDialog("Please enter plate which car want to delete.");
 				
-				try(Scanner scanner = new Scanner(new BufferedReader(new FileReader("automobiles.txt")))){
+				try(Scanner scanner = new Scanner(new BufferedReader(new FileReader("temp.txt")))){
 					
 					while(scanner.hasNextLine()) {
 						
@@ -87,7 +88,7 @@ public class DeletePage extends JFrame {
 					}
 				}
 				catch (IOException e) {
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "First, you should add car !");
 				}
 			}
 		});
