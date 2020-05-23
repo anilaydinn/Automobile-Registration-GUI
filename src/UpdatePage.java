@@ -34,6 +34,7 @@ public class UpdatePage extends JFrame {
 	private JLabel lblDoors;
 	private JLabel lblPlate;
 	private JTextField tfPlate;
+	private String plate;
 	/**
 	 * Create the frame.
 	 */
@@ -45,8 +46,6 @@ public class UpdatePage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
-		
-		String plate = JOptionPane.showInputDialog("Please enter plate for update.");
 		
 		JLabel lblUpdate = new JLabel("Update Automobile");
 		lblUpdate.setFont(new Font("Dialog", Font.BOLD, 18));
@@ -144,31 +143,36 @@ public class UpdatePage extends JFrame {
 				
 				try(Scanner scanner = new Scanner(new BufferedReader(new FileReader("automobiles.txt")))){
 					
-					while(scanner.hasNextLine()) {
-						
-						String automobiles_info = scanner.nextLine();
-						
-						if(automobiles_info.contains(plate)) {
-							continue;
-						}
-						
-						automobilesList.add(automobiles_info);
-					}
-					scanner.close();
-					
-					try {
-						File tempFile = new File("temp.txt");
-						FileWriter tempFileWriter = new FileWriter(tempFile);
-						
-						for(String automobile : automobilesList) {
+					if(plateIsExist(plate)) {
+						while(scanner.hasNextLine()) {
 							
-							tempFileWriter.write(automobile + "\n");
+							String automobiles_info = scanner.nextLine();
+							
+							if(automobiles_info.contains(plate)) {
+								continue;
+							}
+							
+							automobilesList.add(automobiles_info);
 						}
-						tempFileWriter.write(car.toString() + "\n");
-						tempFileWriter.close();
+						scanner.close();
+						
+						try {
+							File tempFile = new File("temp.txt");
+							FileWriter tempFileWriter = new FileWriter(tempFile);
+							
+							for(String automobile : automobilesList) {
+								
+								tempFileWriter.write(automobile + "\n");
+							}
+							tempFileWriter.write(car.toString() + "\n");
+							tempFileWriter.close();
+						}
+						catch (IOException e) {
+							e.printStackTrace();
+						}
 					}
-					catch (IOException e) {
-						e.printStackTrace();
+					else {
+						JOptionPane.showMessageDialog(null, "This car not here !");
 					}
 				}
 				catch (IOException e) {
@@ -178,5 +182,26 @@ public class UpdatePage extends JFrame {
 		});
 		btnUpdate.setBounds(168, 248, 86, 25);
 		contentPane.add(btnUpdate);
+	}
+	
+	public boolean plateIsExist(String plate) {
+		
+		try {
+			File automobileFile = new File("automobiles.txt");
+			Scanner automobileScanner = new Scanner(new BufferedReader(new FileReader(automobileFile)));
+			
+			while(automobileScanner.hasNextLine()) {
+				
+				if(automobileScanner.nextLine().contains(plate)) {
+					return true;
+				}
+			}
+			automobileScanner.close();
+			return false;
+		}
+		catch (IOException e) {
+			JOptionPane.showMessageDialog(null, "Automobile file not found !");
+			return false;
+		}
 	}
 }

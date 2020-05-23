@@ -62,8 +62,15 @@ public class MainPage extends JFrame {
 		btnUpdateCar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				UpdatePage updatePage = new UpdatePage();
-				setVisible(false);
-				updatePage.setVisible(true);
+				String plate = JOptionPane.showInputDialog("Please enter plate for update.");
+				
+				if(updatePage.plateIsExist(plate)) {
+					setVisible(false);
+					updatePage.setVisible(true);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "This car not here.");
+				}
 			}
 		});
 		btnUpdateCar.setBounds(54, 126, 117, 25);
