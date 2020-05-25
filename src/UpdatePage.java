@@ -1,12 +1,8 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -38,7 +34,7 @@ public class UpdatePage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public UpdatePage() {
+	public UpdatePage(String plate) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 281, 322);
 		contentPane = new JPanel();
@@ -46,6 +42,8 @@ public class UpdatePage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
+		
+		this.plate = plate;
 		
 		JLabel lblUpdate = new JLabel("Update Automobile");
 		lblUpdate.setFont(new Font("Dialog", Font.BOLD, 18));
@@ -127,7 +125,7 @@ public class UpdatePage extends JFrame {
 				String updateModel = tfModel.getText();
 				String updateColor = tfColor.getText();
 				String updateFuelType = tfFuelType.getText();
-				int updateDoors = Integer.parseInt(tfDoors.getText());
+				int updateDoors;
 				
 				try {
 					updateDoors = Integer.parseInt(tfDoors.getText());
@@ -140,6 +138,39 @@ public class UpdatePage extends JFrame {
 				String  updatePlate = tfPlate.getText();
 				
 				Car car = new Car(updatedBrand, updateModel, updateColor, updateFuelType, updateDoors, updatePlate);
+				
+				if(car.getBrand().equals("")) {
+					JOptionPane.showMessageDialog(null, "You should write brand!");
+					return;
+				}
+				else if(car.getModel().equals("")) {
+					JOptionPane.showMessageDialog(null, "You should write model!");
+					return;
+				}
+				else if(car.getColor().equals("")) {
+					JOptionPane.showMessageDialog(null, "You should write color!");
+					return;
+				}
+				else if(car.getFuelType().equals("")) {
+					JOptionPane.showMessageDialog(null, "You should write fuel type!");
+					return;
+				}
+				else if(car.getDoors() == 0) {
+					JOptionPane.showMessageDialog(null, "You should write number of doors!");
+					return;
+				}
+				else if(car.getDoors() > 4 || car.getDoors() == 3) {
+					JOptionPane.showMessageDialog(null, "Impossible, generally cars have 2 or 4 doors!");
+					return;
+				}
+				else if(tfDoors.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "You should write number of doors!");
+					return;
+				}
+				else if(car.getPlate().equals("")) {
+					JOptionPane.showMessageDialog(null, "You should write plate!");
+					return;
+				}
 				
 				try(Scanner scanner = new Scanner(new BufferedReader(new FileReader("automobiles.txt")))){
 					
@@ -185,22 +216,28 @@ public class UpdatePage extends JFrame {
 	}
 	
 	public boolean plateIsExist(String plate) {
-		
-		try {
-			File automobileFile = new File("automobiles.txt");
-			Scanner automobileScanner = new Scanner(new BufferedReader(new FileReader(automobileFile)));
+		if(!plate.equals("")) {
 			
-			while(automobileScanner.hasNextLine()) {
+			try {
+				File automobileFile = new File("automobiles.txt");
+				Scanner automobileScanner = new Scanner(new BufferedReader(new FileReader(automobileFile)));
 				
-				if(automobileScanner.nextLine().contains(plate)) {
-					return true;
+				while(automobileScanner.hasNextLine()) {
+					
+					if(automobileScanner.nextLine().contains(plate)) {
+						automobileScanner.close();
+						return true;
+					}
 				}
+				automobileScanner.close();
+				return false;
 			}
-			automobileScanner.close();
-			return false;
+			catch (IOException e) {
+				JOptionPane.showMessageDialog(null, "Automobile file not found !");
+				return false;
+			}
 		}
-		catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Automobile file not found !");
+		else {
 			return false;
 		}
 	}

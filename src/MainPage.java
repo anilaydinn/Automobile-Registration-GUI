@@ -1,6 +1,3 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -61,8 +58,8 @@ public class MainPage extends JFrame {
 		JButton btnUpdateCar = new JButton("Update Car");
 		btnUpdateCar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				UpdatePage updatePage = new UpdatePage();
 				String plate = JOptionPane.showInputDialog("Please enter plate for update.");
+				UpdatePage updatePage = new UpdatePage(plate);
 				
 				if(updatePage.plateIsExist(plate)) {
 					setVisible(false);
@@ -199,8 +196,8 @@ public class MainPage extends JFrame {
 					JOptionPane.showMessageDialog(null, "You should write number of doors !");
 					return;
 				}
-				else if(car.getDoors() > 4) {
-					JOptionPane.showMessageDialog(null, "Impossible ! Doors bigger than 4 !");
+				else if(car.getDoors() > 4 || car.getDoors() == 3) {
+					JOptionPane.showMessageDialog(null, "Impossible, generally cars have 2 or 4 doors!");
 					return;
 				}
 				else if(tfDoors.getText().equals("")) {
@@ -240,6 +237,7 @@ public class MainPage extends JFrame {
 							tempFileWriter.write(automobile + "\n");
 						}
 						tempFileWriter.close();
+						JOptionPane.showMessageDialog(null, "Automobile succesfully registered.");
 					}
 					catch (IOException e) {
 						e.printStackTrace();
