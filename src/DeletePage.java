@@ -37,14 +37,20 @@ public class DeletePage extends JFrame {
 		btnDeleteAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				try {
-					File tempFile = new File("temp.txt");
-					FileWriter tempFileWriter = new FileWriter(tempFile);
-					
-					tempFileWriter.close();
+				if(lineExist()) {
+					try {
+						File tempFile = new File("temp.txt");
+						FileWriter tempFileWriter = new FileWriter(tempFile);
+						
+						tempFileWriter.close();
+						JOptionPane.showMessageDialog(null, "All automobiles successfully deleted.");
+					}
+					catch (IOException e) {
+						JOptionPane.showMessageDialog(null, "First, you should add car !");
+					}
 				}
-				catch (IOException e) {
-					JOptionPane.showMessageDialog(null, "First, you should add car !");
+				else {
+					JOptionPane.showMessageDialog(null, "There are no cars registered in the file.");
 				}
 			}
 		});
@@ -59,37 +65,44 @@ public class DeletePage extends JFrame {
 				
 				String plate = JOptionPane.showInputDialog("Please enter plate which car want to delete.");
 				
-				try(Scanner scanner = new Scanner(new BufferedReader(new FileReader("temp.txt")))){
-					
-					while(scanner.hasNextLine()) {
+				if(plateIsExist(plate)) {
+					try(Scanner scanner = new Scanner(new BufferedReader(new FileReader("temp.txt")))){
 						
-						String automobiles_info = scanner.nextLine();
-						
-						if(automobiles_info.contains(plate)) {
-							continue;
-						}
-						
-						automobilesList.add(automobiles_info);
-					}
-					scanner.close();
-					
-					try {
-						File tempFile = new File("temp.txt");
-						FileWriter tempFileWriter = new FileWriter(tempFile);
-						
-						for(String automobile : automobilesList) {
+						while(scanner.hasNextLine()) {
 							
-							tempFileWriter.write(automobile + "\n");
+							String automobiles_info = scanner.nextLine();
+							
+							if(automobiles_info.contains(plate)) {
+								continue;
+							}
+							
+							automobilesList.add(automobiles_info);
 						}
-						tempFileWriter.close();
+						scanner.close();
+						
+						try {
+							File tempFile = new File("temp.txt");
+							FileWriter tempFileWriter = new FileWriter(tempFile);
+							
+							for(String automobile : automobilesList) {
+								
+								tempFileWriter.write(automobile + "\n");
+							}
+							tempFileWriter.close();
+							JOptionPane.showMessageDialog(null, plate + " plate car successfully deleted.");
+						}
+						catch (IOException e) {
+							e.printStackTrace();
+						}
 					}
 					catch (IOException e) {
-						e.printStackTrace();
+						JOptionPane.showMessageDialog(null, "First, you should add car !");
 					}
 				}
-				catch (IOException e) {
-					JOptionPane.showMessageDialog(null, "First, you should add car !");
+				else {
+					JOptionPane.showMessageDialog(null, "This car not here!");
 				}
+				
 			}
 		});
 		btnDeleteByPlate.setBounds(186, 49, 166, 25);
@@ -110,5 +123,53 @@ public class DeletePage extends JFrame {
 		});
 		btnBack.setBounds(12, 99, 87, 25);
 		contentPane.add(btnBack);
+	}
+	
+	public boolean plateIsExist(String plate) {
+		if(!plate.equals("")) {
+			
+			try {
+				File tempFile = new File("temp.txt");
+				Scanner tempScanner = new Scanner(new BufferedReader(new FileReader(tempFile)));
+				
+				while(tempScanner.hasNextLine()) {
+					
+					if(tempScanner.nextLine().contains(plate)) {
+						tempScanner.close();
+						return true;
+					}
+				}
+				tempScanner.close();
+				return false;
+			}
+			catch (IOException e) {
+				JOptionPane.showMessageDialog(null, "Automobile file not found !");
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public boolean lineExist() {
+		
+		try {
+			File tempFile = new File("temp.txt");
+			Scanner tempScanner = new Scanner(new BufferedReader(new FileReader(tempFile)));
+			
+			if(tempScanner.hasNext()) {
+				tempScanner.close();
+				return true;
+			}
+			else {
+				tempScanner.close();
+				return false;
+			}
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

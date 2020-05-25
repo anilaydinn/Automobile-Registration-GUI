@@ -87,6 +87,7 @@ public class RegisterPage extends JFrame {
 				if((!username.equals("") && !password.equals("") && !confirmPassword.equals("")) && (password.equals(confirmPassword))) {
 					User user = new User(username, password);
 					fileManager.addUserToFile(user);
+					JOptionPane.showMessageDialog(null, "Register success!");
 				}
 				else if(username.equals("") || password.equals("") || confirmPassword.equals("")) {
 					
