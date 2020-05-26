@@ -37,7 +37,9 @@ public class DeletePage extends JFrame {
 		btnDeleteAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(lineExist()) {
+				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure ?");
+				
+				if(lineExist() && confirm == 0) {
 					try {
 						File tempFile = new File("temp.txt");
 						FileWriter tempFileWriter = new FileWriter(tempFile);
@@ -48,6 +50,9 @@ public class DeletePage extends JFrame {
 					catch (IOException e) {
 						JOptionPane.showMessageDialog(null, "First, you should add car !");
 					}
+				}
+				else if(confirm == 1 || confirm == 2) {
+					return;
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "There are no cars registered in the file.");
