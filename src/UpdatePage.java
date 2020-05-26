@@ -196,6 +196,7 @@ public class UpdatePage extends JFrame {
 								tempFileWriter.write(automobile + "\n");
 							}
 							tempFileWriter.write(car.toString() + "\n");
+							JOptionPane.showMessageDialog(null, plate + " plate car successfully updated.");
 							tempFileWriter.close();
 						}
 						catch (IOException e) {
@@ -203,7 +204,7 @@ public class UpdatePage extends JFrame {
 						}
 					}
 					else {
-						JOptionPane.showMessageDialog(null, "This car not here !");
+						JOptionPane.showMessageDialog(null, "This car not found!");
 					}
 				}
 				catch (IOException e) {

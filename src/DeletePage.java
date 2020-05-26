@@ -100,7 +100,7 @@ public class DeletePage extends JFrame {
 					}
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "This car not here!");
+					JOptionPane.showMessageDialog(null, "This car not found!");
 				}
 				
 			}

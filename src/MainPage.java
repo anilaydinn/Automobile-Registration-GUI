@@ -66,7 +66,7 @@ public class MainPage extends JFrame {
 					updatePage.setVisible(true);
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "This car not here.");
+					JOptionPane.showMessageDialog(null, "This car not found!");
 				}
 			}
 		});
