@@ -27,7 +27,7 @@ public class ShowPage extends JFrame {
 	 */
 	public ShowPage() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 616, 480);
+		setBounds(100, 100, 632, 480);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
