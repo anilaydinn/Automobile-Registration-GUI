@@ -84,7 +84,11 @@ public class RegisterPage extends JFrame {
 				String password = new String(pfPasswordField.getPassword());
 				String confirmPassword = new String(pfConfirmPasswordField.getPassword());
 				
-				if((!username.equals("") && !password.equals("") && !confirmPassword.equals("")) && (password.equals(confirmPassword))) {
+				if(fileManager.isUsernameExists(username)) {
+					JOptionPane.showMessageDialog(null, "This username already register!");
+					return;
+				}
+				else if((!username.equals("") && !password.equals("") && !confirmPassword.equals("")) && (password.equals(confirmPassword))) {
 					User user = new User(username, password);
 					fileManager.addUserToFile(user);
 					JOptionPane.showMessageDialog(null, "Register success!");

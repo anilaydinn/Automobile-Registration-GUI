@@ -130,4 +130,25 @@ public class FileManager {
 			return false;
 		}
 	}
+	
+	public boolean isUsernameExists(String username) {
+		
+		try {
+			
+			this.userFileFileReader = new FileReader(usersFile);
+			this.userFileBufferedReader = new BufferedReader(this.userFileFileReader);
+			this.userFileScanner = new Scanner(this.userFileBufferedReader);
+			
+			while(userFileScanner.hasNextLine()) {
+				
+				if(userFileScanner.nextLine().contains(username)) {
+					return true;
+				}
+			}
+			return false;
+		}
+		catch (IOException e) {
+			return false;
+		}
+	}
 }
