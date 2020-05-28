@@ -51,11 +51,11 @@ public class DeletePage extends JFrame {
 						JOptionPane.showMessageDialog(null, "First, you should add car !");
 					}
 				}
-				else if(confirm == 1 || confirm == 2) {
+				else if(confirm == 1) {
 					return;
 				}
-				else {
-					JOptionPane.showMessageDialog(null, "There are no cars registered in the file.");
+				else if(confirm ==2) {
+					return;
 				}
 			}
 		});
@@ -173,7 +173,6 @@ public class DeletePage extends JFrame {
 			}
 		}
 		catch (IOException e) {
-			e.printStackTrace();
 			return false;
 		}
 	}
