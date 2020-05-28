@@ -17,7 +17,6 @@ public class FileManager {
 	private Scanner userFileScanner;
 	private File automobilesFile;
 	private File usersFile;
-	private ArrayList<Car> cars;
 	
 	public FileManager(String filename) {
 		
@@ -69,16 +68,6 @@ public class FileManager {
 	public File getAutomobilesFile() {
 		
 		return this.automobilesFile;
-	}
-	
-	public void setCars(ArrayList<Car> cars) {
-		
-		this.cars = cars;
-	}
-	
-	public ArrayList<Car> getCars(){
-		
-		return this.cars;
 	}
 	
 	public void addCarToFile(Car car) {
