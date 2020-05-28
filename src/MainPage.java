@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -34,7 +35,7 @@ public class MainPage extends JFrame {
 	 */
 	public MainPage() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 761, 380);
+		setBounds(100, 100, 761, 407);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -46,10 +47,18 @@ public class MainPage extends JFrame {
 		contentPane.add(addPanel);
 		addPanel.setLayout(null);
 		
+		JLabel lblCarImage = new JLabel("");
+		lblCarImage.setBounds(204, 41, 522, 325);
+		contentPane.add(lblCarImage);
+		
+		ImageIcon carImage = new ImageIcon("./images/car.png");
+		lblCarImage.setIcon(carImage);
+		
 		JButton btnAddCar = new JButton("Add Car");
 		btnAddCar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				addPanel.setVisible(true);
+				lblCarImage.setVisible(false);
 			}
 		});
 		btnAddCar.setBounds(54, 50, 117, 25);
@@ -255,6 +264,7 @@ public class MainPage extends JFrame {
 		btnCloseAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				addPanel.setVisible(false);
+				lblCarImage.setVisible(true);
 			}
 		});
 		btnCloseAdd.setBounds(266, 231, 139, 25);
@@ -262,9 +272,9 @@ public class MainPage extends JFrame {
 		
 		JLabel lblAddCar = new JLabel("Add Car");
 		lblAddCar.setBounds(207, 12, 70, 15);
-		addPanel.add(lblAddCar);
+		addPanel.add(lblAddCar);	
 		
 		setLocationRelativeTo(null);
+		
 	}
-
 }
