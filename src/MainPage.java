@@ -274,6 +274,17 @@ public class MainPage extends JFrame {
 		lblAddCar.setBounds(207, 12, 70, 15);
 		addPanel.add(lblAddCar);	
 		
+		JButton btnExit = new JButton("Exit");
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				LoginPage loginPage = new LoginPage();
+				setVisible(false);
+				loginPage.setVisible(true);
+			}
+		});
+		btnExit.setBounds(671, 12, 78, 25);
+		contentPane.add(btnExit);
+		
 		setLocationRelativeTo(null);
 		
 	}
